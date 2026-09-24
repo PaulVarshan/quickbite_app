@@ -40,7 +40,7 @@ The app has nine screens: Splash, Login, Home, Item Detail, Cart, Checkout, Orde
 | Small-phone test | 720 × 1280 px, 320 dpi (360 × 640 dp) via `adb shell wm size/density` |
 | Tablet test | 1600 × 2560 px, 320 dpi (800 × 1280 dp) via `adb shell wm size/density` |
 | Runtime | Expo Go 57.0.9, Metro dev server (`npx expo start --android`) |
-| Physical device | **Not available during this session** (see TC-028) |
+| Physical device | HONOR X9c running Expo Go, connected to the dev server over the local network (see TC-028). Android version not recorded. Evidence is photos of the phone screen. |
 | iOS | **Not tested** (no macOS / iOS device available) |
 
 The app was driven through `adb` (taps, text input and UI hierarchy dumps). All screenshots were captured from the emulator with `adb exec-out screencap`.
@@ -50,14 +50,14 @@ The app was driven through `adb` (taps, text input and UI hierarchy dumps). All 
 ### 3. Functional Test Summary
 
 All 30 planned test cases were attempted, with these results:
-- **29 were executed** against the running app on the Android emulator.
-- **1 was blocked**: TC-028, because no physical phone was connected.
+- **29 were executed** on the Android emulator.
+- **1 (TC-028) was executed** on a physical HONOR X9c phone through Expo Go.
 
 **11 defects** were found during testing:
 - 1 was an environment/configuration issue.
 - 10 were app defects.
 
-All 11 were fixed, and every affected test was re-run on the running app afterwards. In the final state, all 29 executed tests pass.
+All 11 were fixed, and every affected test was re-run on the running app afterwards. In the final state, all 30 tests pass.
 
 Tests that failed on first run and passed after fixes:
 - **TC-004:** broken image.
@@ -101,7 +101,7 @@ Tests that failed on first run and passed after fixes:
 | TC-025 | Profile | Profile loads with user info | Shows avatar initial "G", "Guest Student", badges, stats (Orders Placed, Items Ordered, ~20m Avg. Pickup), Order History and a sign-out icon. No broken UI. | PASS | SS-13 |
 | TC-026 | Order History | Recent order appears, consistent with confirmation | QB-8828 listed with date "Sep 24, 11:42 AM", "1x Crispy Chicken Rice, 2x Grilled Beef Burger", Meals Counter 2 and LKR 1,490, all matching the confirmation. Tapping it opens its tracking screen. After a 2nd order, the newest (QB-6164) is listed first: "2 orders", Items Ordered 4. | PASS | SS-13 |
 | TC-027 | Navigation / Back Navigation | Full flow works; back keeps state; no blank screens | Splash → Login → Home → Detail → Cart → Checkout → Confirmation → Tracking → Profile all completed. The Android back button and header back arrows work, with no crashes or blank screens. "Track Order Status" opens the new order (QB-6164). Tracking's back goes to Home. Sign-out returns to Login. | PASS | – |
-| TC-028 | Physical Android Device | App runs on a real phone via Expo Go | **Not executed.** No physical Android phone was connected (`adb devices` listed only the emulator), so no physical-device result or screenshot is claimed. | BLOCKED | NOT PERFORMED |
+| TC-028 | Physical Android Device | App runs on a real phone via Expo Go | The app ran on a HONOR X9c through Expo Go, loaded over the local network from `npx expo start`. Checked on the phone: the Home header is below the status bar and the greeting reads "Hello, Guest Student"; searching "Rice" gives "2 items available" (Crispy Chicken Rice, Campus Vegetable Bowl), matching the emulator; item detail shows the image, specs, quantity selector and "LKR 450" total; Checkout shows pickup counters, payment options and "Place Order (LKR 900)", confirming the cart carried over. Placing the order, tracking and Profile on the phone were not photographed. The grey gear on screen is Expo Go's developer tools button, not part of the app. The phone's system font wraps "Express Counter 1" onto two lines; it stays readable. | PASS | SS-14 (3 photos) |
 | TC-029 | Phone Responsiveness (360 × 640 dp) | No overflow, clipping or unreachable controls | Login, Home, Detail, Cart and Checkout are usable. Long names are truncated with an ellipsis, and the category row scrolls horizontally. **First run: with 4+ cart items, the last item's quantity controls stayed hidden behind the Order Summary panel (BUG-011).** After the fix the last item is fully visible and its + button works (Vegetable Bowl 1 → 2, subtotal 1,800 → 2,150). | PASS (after fix) | SS-14b, SS-14c |
 | TC-030 | Tablet Responsiveness (800 × 1280 dp) | Layout adapts; content readable | Home switches to a 3-column grid (2 columns on phones). Detail, Cart, Checkout and Profile render without breakage. Content stretches to full width (cosmetic, see Section 11). | PASS | SS-15, SS-15b |
 
@@ -211,8 +211,20 @@ All screenshots were taken on the Android emulator (Expo Go) after the feature w
 #### SS-13 Profile & Order History
 ![Profile](screenshots/SS-13-Profile.png)
 
-#### SS-14 Physical Phone
-**NOT PERFORMED.** No physical Android device was available during this test session, so no physical-device screenshot exists. Small-phone responsiveness was tested on the emulator instead (SS-14b, SS-14c).
+#### SS-14 Physical Phone (HONOR X9c, Expo Go)
+These are photos of the phone screen, taken with a second camera. The grey gear icon is Expo Go's developer tools button, not part of the app.
+
+Home, with the search "Rice" applied:
+
+![Physical Phone Home](screenshots/SS-14-Physical-Phone.png)
+
+Item detail:
+
+![Physical Phone Detail](screenshots/SS-14-Physical-Phone-Detail.png)
+
+Checkout:
+
+![Physical Phone Checkout](screenshots/SS-14-Physical-Phone-Checkout.png)
 
 #### SS-14b Small Phone (360 × 640 dp) – Home
 ![Small Phone Home](screenshots/SS-14b-Small-Phone-Home.png)
@@ -258,9 +270,9 @@ Some "before" screenshots include the Expo Go tools button, a development warnin
 | Order tracking (Placed / Preparing / Ready for pickup) | TC-022–TC-024 | SS-10–SS-12 | PASS |
 | Basic profile and order history | TC-025, TC-026 | SS-13 | PASS |
 | Responsive UI | TC-029, TC-030 | SS-14b, SS-14c, SS-15, SS-15b | PASS |
-| Physical Android device run | TC-028 | – | BLOCKED (not performed) |
+| Physical Android device run | TC-028 | SS-14 | PASS |
 | Android/iOS shared codebase | Code review | Single codebase: `App.tsx`, `src/` | Android verified on emulator; iOS **not tested** |
-| ≥ 6 functional test cases | Sections 4–6 | – | 29 executed |
+| ≥ 6 functional test cases | Sections 4–6 | – | 30 executed |
 
 ---
 
@@ -375,10 +387,10 @@ This is the `origin` remote of the local repository. The fixes and test evidence
 ### 11. Final Test Summary
 
 ```text
-Total Tests Executed:   29 (of 30 planned)
-Passed:                 29
+Total Tests Executed:   30 (of 30 planned)
+Passed:                 30
 Failed:                 0  (final state; 7 test cases failed on first run and passed after fixes)
-Blocked:                1  (TC-028 – no physical Android device available)
+Blocked:                0
 Bugs Found:             11 (1 environment/configuration, 10 application)
 Bugs Fixed:             11
 Regression Tests:       All tests affected by each fix re-run (Section 6), plus a full
@@ -394,6 +406,6 @@ Remaining Known Issues: see below
 4. **No maximum quantity.** There is no upper limit on item quantity; 12+ was accepted. (Observation)
 5. **Tablet layout stretches.** On tablets, Detail, Cart and Checkout stretch to full width, and the detail hero image is cropped more tightly. The content is still readable. (Cosmetic)
 6. **Profile screens can stack.** The profile icon on the Tracking screen opens a new Profile screen on top of the stack, so back goes Profile → Tracking → Home. Nothing is lost and it doesn't crash. (Observation)
-7. **Physical device not tested.** A real phone could not be tested in this session (TC-028).
+7. **Physical-device coverage was partial.** On the phone, Home, search, item detail and Checkout were checked. Placing the order, tracking and Profile were only tested on the emulator. The phone's Android version was not recorded.
 8. **iOS not tested.**
 9. **No linter configured.** The project has no ESLint configuration, so `npx expo lint` was not run; running it would add new configuration and dependencies to the project. The TypeScript check passes.
