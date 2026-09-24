@@ -83,7 +83,7 @@ export const MENU_ITEMS: MenuItem[] = [
     name: 'Golden Seasoned Fries',
     category: 'Snacks',
     price: 220,
-    image: 'https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80',
     description: 'Extra crispy golden shoestring fries dusted with smoked paprika sea salt and garlic aioli dip.',
     rating: 4.7,
     prepTime: '7-10 mins',

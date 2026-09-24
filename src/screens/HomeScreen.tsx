@@ -173,9 +173,11 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
         numColumns={numColumns}
         columnWrapperStyle={numColumns > 1 ? { gap } : undefined}
         keyExtractor={(item) => item.id}
-        ListHeaderComponent={renderHeader}
+        // Pass an element (not a component) so the search input is not remounted on every keystroke
+        ListHeaderComponent={renderHeader()}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
         renderItem={({ item }) => (
           <FoodCard
             item={item}
