@@ -1,6 +1,7 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+# Instructions / guides
+QuickBite_React_Native_Expo_Agent_Guide.md
 
-# dependencies
+# Dependencies
 node_modules/
 
 # Expo
@@ -21,21 +22,33 @@ expo-env.d.ts
 # Metro
 .metro-health-check*
 
-# debug
+# Debug & logs
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+*.log
 
-# macOS
+# macOS & Windows
 .DS_Store
+Thumbs.db
 *.pem
 
-# local env files
+# Local environment files
 .env*.local
+.env
 
-# typescript
+# IDE & Editor settings
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# TypeScript
 *.tsbuildinfo
 
-# generated native folders
+# Generated native folders
 /ios
 /android
