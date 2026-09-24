@@ -88,7 +88,7 @@ export default function CartScreen({ navigation }: CartScreenProps) {
 
             <View style={styles.summaryRow}>
               <Text style={styles.summaryLabel}>Total Items</Text>
-              <Text style={styles.summaryValue}>{itemCount} items</Text>
+              <Text style={styles.summaryValue}>{itemCount} {itemCount === 1 ? 'item' : 'items'}</Text>
             </View>
 
             <View style={styles.summaryRow}>
@@ -137,7 +137,6 @@ const styles = StyleSheet.create({
   },
   listContent: {
     padding: 16,
-    paddingBottom: 220,
   },
   emptyContainer: {
     flex: 1,
@@ -187,11 +186,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '700',
   },
+  // Laid out below the list (not overlaid) so the last cart item is never hidden on short screens
   summaryCard: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
     backgroundColor: '#FFFFFF',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,

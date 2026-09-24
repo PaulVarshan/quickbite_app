@@ -27,14 +27,15 @@ export default function ItemDetailScreen({
   const { item } = route.params;
   const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
-  const [addedSuccess, setAddedSuccess] = useState(false);
+  // Quantity from the last Add to Cart tap, so the banner does not change when the selector changes
+  const [addedQuantity, setAddedQuantity] = useState<number | null>(null);
 
   const increase = () => setQuantity((q) => q + 1);
   const decrease = () => setQuantity((q) => Math.max(1, q - 1));
 
   const handleAddToCart = () => {
     addToCart(item, quantity);
-    setAddedSuccess(true);
+    setAddedQuantity(quantity);
   };
 
   const totalPrice = item.price * quantity;
@@ -119,12 +120,12 @@ export default function ItemDetailScreen({
           </View>
 
           {/* Added to Cart Feedback Banner */}
-          {addedSuccess && (
+          {addedQuantity !== null && (
             <View style={styles.successBanner}>
               <View style={styles.successLeft}>
                 <Ionicons name="checkmark-circle" size={20} color="#10B981" />
                 <Text style={styles.successText}>
-                  Added {quantity}x {item.name} to cart!
+                  Added {addedQuantity}x {item.name} to cart!
                 </Text>
               </View>
               <TouchableOpacity

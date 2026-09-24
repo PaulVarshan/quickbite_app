@@ -33,7 +33,8 @@ const PAYMENT_METHODS = [
 ];
 
 export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
-  const { items, subtotal, userName, setUserName, placeNewOrder } = useCart();
+  const { items, itemCount, subtotal, userName, setUserName, placeNewOrder } =
+    useCart();
   const [selectedCounter, setSelectedCounter] = useState(PICKUP_COUNTERS[0]);
   const [selectedPayment, setSelectedPayment] = useState(PAYMENT_METHODS[0].name);
   const [pickupNote, setPickupNote] = useState('');
@@ -170,7 +171,7 @@ export default function CheckoutScreen({ navigation }: CheckoutScreenProps) {
         <View style={styles.card}>
           <View style={styles.cardHeaderRow}>
             <Ionicons name="receipt-outline" size={20} color="#FF5722" />
-            <Text style={styles.cardTitle}>Order Summary ({items.length} items)</Text>
+            <Text style={styles.cardTitle}>Order Summary ({itemCount} {itemCount === 1 ? 'item' : 'items'})</Text>
           </View>
 
           {items.map((item) => (

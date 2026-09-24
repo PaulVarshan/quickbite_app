@@ -60,13 +60,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     );
   };
 
+  // Quantity never drops below 1 here; removing an item is done with removeFromCart
   const decreaseQuantity = (id: string) => {
     setItems((current) =>
-      current
-        .map((item) =>
-          item.id === id ? { ...item, quantity: item.quantity - 1 } : item
-        )
-        .filter((item) => item.quantity > 0)
+      current.map((item) =>
+        item.id === id
+          ? { ...item, quantity: Math.max(1, item.quantity - 1) }
+          : item
+      )
     );
   };
 

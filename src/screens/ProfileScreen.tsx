@@ -62,7 +62,10 @@ export default function ProfileScreen({ navigation }: ProfileScreenProps) {
         <View style={styles.statDivider} />
         <View style={styles.statBox}>
           <Text style={styles.statVal}>
-            {orders.reduce((sum, o) => sum + o.items.length, 0)}
+            {orders.reduce(
+              (sum, o) => sum + o.items.reduce((n, i) => n + i.quantity, 0),
+              0
+            )}
           </Text>
           <Text style={styles.statLabel}>Items Ordered</Text>
         </View>

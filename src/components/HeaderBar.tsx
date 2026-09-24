@@ -78,11 +78,11 @@ const styles = StyleSheet.create({
     borderBottomColor: '#F1F5F9',
   },
   leftContainer: {
-    width: 44,
+    minWidth: 44,
     alignItems: 'flex-start',
   },
   rightContainer: {
-    width: 44,
+    minWidth: 44,
     alignItems: 'flex-end',
   },
   title: {
